@@ -4,8 +4,9 @@ import Daedeok from "./geojson/Daedeok";
 import Dong from "./geojson/Dong";
 import Jung from "./geojson/Jung";
 import Seo from "./geojson/Seo";
-import YouSeong from "./geojson/Youseong";
+import Yuseong from "./geojson/Yuseong";
 import Daejeon from "./geojson/Daejeon";
+import DongFinder from "./dong";
 
 const { kakao } = window;
 
@@ -18,7 +19,7 @@ function Map() {
         };
         var map = new kakao.maps.Map(container, options);
         var polygonPathDaejeon = [];
-        var polygonPathYouSeong = [];
+        var polygonPathYuseong = [];
         var polygonPathDaedeok = [];
         var polygonPathDong = [];
         var polygonPathSeo = [];
@@ -31,10 +32,10 @@ function Map() {
             }
         };
 
-        for (var i = 0; i < YouSeong.features.length; i++) {
-            var geo = YouSeong.features[i].geometry.coordinates[0];
+        for (var i = 0; i < Yuseong.features.length; i++) {
+            var geo = Yuseong.features[i].geometry.coordinates[0];
             for (var j = 0; j < geo.length; j++) {
-                polygonPathYouSeong.push(new kakao.maps.LatLng(geo[j][1], geo[j][0]));
+                polygonPathYuseong.push(new kakao.maps.LatLng(geo[j][1], geo[j][0]));
             }
         };
 
@@ -77,8 +78,8 @@ function Map() {
             fillOpacity: 0.7 // 채우기 불투명도 입니다
         });
 
-        var polygonYouSeong = new kakao.maps.Polygon({
-            path: polygonPathYouSeong,
+        var polygonYuseong = new kakao.maps.Polygon({
+            path: polygonPathYuseong,
             strokeWeight: 3,
             strokeColor: '#39DE2A',
             strokeOpacity: 0.5,
@@ -126,7 +127,6 @@ function Map() {
             fillColor: '#A2FF99',
             fillOpacity: 0.7
         });
-            
 
         polygonDajeon.setMap(map);
 
@@ -134,13 +134,77 @@ function Map() {
             map.setCenter(new kakao.maps.LatLng(36.350556922518145, 127.38483493545483));
             map.setLevel(9);
             polygonDajeon.setMap(null);
-            polygonYouSeong.setMap(map);
+            polygonYuseong.setMap(map);
             polygonDaedeok.setMap(map);
             polygonJung.setMap(map);
             polygonSeo.setMap(map);
             polygonDong.setMap(map);
         });
 
+        kakao.maps.event.addListener(polygonYuseong, 'click', function(mouseEvent) {  
+            map.setCenter(new kakao.maps.LatLng(36.39652012072702, 127.35557556152345));
+            map.setLevel(9);
+            polygonYuseong.setMap(null);
+            polygonDaedeok.setMap(null);
+            polygonJung.setMap(null);
+            polygonSeo.setMap(null);
+            polygonDong.setMap(null);
+            DongFinder(kakao, "유성구").forEach(element => {
+                element.setMap(map);
+            });
+        });
+
+        kakao.maps.event.addListener(polygonDaedeok, 'click', function(mouseEvent) {  
+            map.setCenter(new kakao.maps.LatLng(36.39652012072702, 127.35557556152345));
+            map.setLevel(9);
+            polygonYuseong.setMap(null);
+            polygonDaedeok.setMap(null);
+            polygonJung.setMap(null);
+            polygonSeo.setMap(null);
+            polygonDong.setMap(null);
+            DongFinder(kakao, "대덕구").forEach(element => {
+                element.setMap(map);
+            });
+        });
+
+        kakao.maps.event.addListener(polygonDong, 'click', function(mouseEvent) {  
+            map.setCenter(new kakao.maps.LatLng(36.33652012072702, 127.45557556152345));
+            map.setLevel(9);
+            polygonYuseong.setMap(null);
+            polygonDaedeok.setMap(null);
+            polygonJung.setMap(null);
+            polygonSeo.setMap(null);
+            polygonDong.setMap(null);
+            DongFinder(kakao, "동구").forEach(element => {
+                element.setMap(map);
+            });
+        });
+
+        kakao.maps.event.addListener(polygonJung, 'click', function(mouseEvent) {  
+            map.setCenter(new kakao.maps.LatLng(36.32652012072702, 127.38557556152345));
+            map.setLevel(9);
+            polygonYuseong.setMap(null);
+            polygonDaedeok.setMap(null);
+            polygonJung.setMap(null);
+            polygonSeo.setMap(null);
+            polygonDong.setMap(null);
+            DongFinder(kakao, "중구").forEach(element => {
+                element.setMap(map);
+            });
+        });
+
+        kakao.maps.event.addListener(polygonSeo, 'click', function(mouseEvent) {  
+            map.setCenter(new kakao.maps.LatLng(36.32652012072702, 127.38557556152345));
+            map.setLevel(9);
+            polygonYuseong.setMap(null);
+            polygonDaedeok.setMap(null);
+            polygonJung.setMap(null);
+            polygonSeo.setMap(null);
+            polygonDong.setMap(null);
+            DongFinder(kakao, "서구").forEach(element => {
+                element.setMap(map);
+            });
+        });
 
     }, []);
 
