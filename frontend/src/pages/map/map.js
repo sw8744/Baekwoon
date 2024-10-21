@@ -210,7 +210,13 @@ function Map() {
 
     return (
         <div id="mapRoot">
-            <div id="map"></div>
+            <div id="map">
+                <div id="mapButtonDiv">
+                    <button id="mapButton" className="mapButton">실시간 배수로 데이터</button>
+                    <button id="mapButton" className="mapButton">배수 유속관리 시스템</button>
+                    <button id="mapButton" className="mapButton">도시 정비계획 데이터</button>
+                </div>
+            </div>
         </div>
     )
 }
