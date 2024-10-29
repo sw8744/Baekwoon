@@ -11,6 +11,16 @@ import DongFinder from "./dong";
 const { kakao } = window;
 
 function Map() {
+    const [guState, setGuState] = useState({"대덕구": 0, "유성구": 0, "동구": 0, "중구": 0, "서구": 0});
+
+    const colorCode = [['#39DE2A', '#A2FF99'], ['#FFC107', '#FFE400'], ['#DC3545', '#FF4848']]
+
+    const fetchGuInfo = async () => {
+        const response = await fetch('http://127.0.0.1:5000/api/getGuInfo');
+        const data = await response.json();
+        return data;
+    };
+
     useEffect(() => {
         var container = document.getElementById('map');
         var options = {
@@ -81,50 +91,50 @@ function Map() {
         var polygonYuseong = new kakao.maps.Polygon({
             path: polygonPathYuseong,
             strokeWeight: 3,
-            strokeColor: '#39DE2A',
+            strokeColor: colorCode[guState["유성구"]][0],
             strokeOpacity: 0.5,
             strokeStyle: 'solid',
-            fillColor: '#A2FF99',
+            fillColor: colorCode[guState["유성구"]][1],
             fillOpacity: 0.7
         });
 
         var polygonDaedeok = new kakao.maps.Polygon({
             path: polygonPathDaedeok,
             strokeWeight: 3,
-            strokeColor: '#39DE2A',
+            strokeColor: colorCode[guState["대덕구"]][0],
             strokeOpacity: 0.5,
             strokeStyle: 'solid',
-            fillColor: '#A2FF99',
+            fillColor: colorCode[guState["대덕구"]][1],
             fillOpacity: 0.7
         });
 
         var polygonJung = new kakao.maps.Polygon({
             path: polygonPathJung,
             strokeWeight: 3,
-            strokeColor: '#39DE2A',
+            strokeColor: colorCode[guState["중구"]][0],
             strokeOpacity: 0.5,
             strokeStyle: 'solid',
-            fillColor: '#A2FF99',
+            fillColor: colorCode[guState["중구"]][1],
             fillOpacity: 0.7
         });
 
         var polygonSeo = new kakao.maps.Polygon({
             path: polygonPathSeo,
             strokeWeight: 3,
-            strokeColor: '#39DE2A',
+            strokeColor: colorCode[guState["서구"]][0],
             strokeOpacity: 0.5,
             strokeStyle: 'solid',
-            fillColor: '#A2FF99',
+            fillColor: colorCode[guState["서구"]][1],
             fillOpacity: 0.7
         });
 
         var polygonDong = new kakao.maps.Polygon({
             path: polygonPathDong,
             strokeWeight: 3,
-            strokeColor: '#39DE2A',
+            strokeColor: colorCode[guState["동구"]][0],
             strokeOpacity: 0.5,
             strokeStyle: 'solid',
-            fillColor: '#A2FF99',
+            fillColor: colorCode[guState["동구"]][1],
             fillOpacity: 0.7
         });
 
@@ -206,6 +216,104 @@ function Map() {
             });
         });
 
+        fetchGuInfo().then(data => {
+            setGuState(data);
+            console.log(guState);
+            if(data["대덕구"] === 0) {
+                polygonDaedeok.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(data["대덕구"] === 1) {
+                polygonDaedeok.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(data["대덕구"] === 2) {
+                polygonDaedeok.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
+
+            if(data["유성구"] === 0) {
+                polygonYuseong.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(data["유성구"] === 1) {
+                polygonYuseong.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(data["유성구"] === 2) {
+                polygonYuseong.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
+
+            if(data["동구"] === 0) {
+                polygonDong.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(data["동구"] === 1) {
+                polygonDong.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(data["동구"] === 2) {
+                polygonDong.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
+            
+            if(data["중구"] === 0) {
+                polygonJung.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(data["중구"] === 1) {
+                polygonJung.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(data["중구"] === 2) {
+                polygonJung.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
+
+            if(data["서구"] === 0) {
+                polygonSeo.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(data["서구"] === 1) {
+                polygonSeo.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(data["서구"] === 2) {
+                polygonSeo.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
+        });
     }, []);
 
     return (
