@@ -2,11 +2,13 @@ import DongOfDaejeon from "./geojson/DongOfDajeon.json";
 
 const fetchDongInfo = async (dong) => {
     const response = await fetch('http://127.0.0.1:5000/api/getDongInfo/' + dong);
-    const data = await response.json();
-    return data;
+    const yuseongInfo = await response.json();
+    return yuseongInfo;
 };
 
-function DongFinder(kakao, guName) {
+var yuseongInfo = await fetchDongInfo("yuseong");
+
+async function DongFinder(kakao, guName) {
     const dongOfDaedeok = ["갈전동", "대화동", "덕암동", "목상동", "문평동", "미호동", "법동", "부수동", "비래동", "삼정동_대덕구", "상서동", "석봉동", "송촌동", "신대동", "신일동", "신탄진동", "연축동", "오정동", "와동", "용호동", "읍내동", "이현동", "장동_대덕구", "중리동", "평촌동_대덕구", "황호동"];
     const dongOfDong = ["가양동", "가오동", "구도동", "낭월동", "내탑동", "대동_동구", "대별동", "대성동", "마산동", "비룡동", "사성동", "삼괴동", "삼성동", "삼정동_동구", "상소동", "성남동", "세천동", "소제동", "소호동", "신상동", "신안동", "신촌동", "신하동", "신흥동", "오동_동구", "용계동_동구", "용운동", "용전동", "원동", "이사동", "인동", "자양동", "장척동", "정동", "주산동", "주촌동", "중동", "직동", "천동", "추동", "판암동", "하소동", "홍도동", "효동", "효평동"];
     const dongOfSeo = ["가수원동", "가장동", "갈마동", "관저동", "괴곡동", "괴정동", "내동", "도마동", "도안동", "둔산동", "만년동", "매노동", "변동", "복수동", "봉곡동", "산직동", "오동_서구", "용문동", "용촌동", "우명동", "원정동", "월평동", "장안동", "정림동", "탄방동", "평촌동_서구", "흑석동"];
@@ -83,6 +85,24 @@ function DongFinder(kakao, guName) {
                 fillOpacity: 0.7
             })
             resultYuseong.push(res);
+            if(yuseongInfo[dongName] === 0) {
+                res.setOptions({
+                    strokeColor: colorCode[0][0],
+                    fillColor: colorCode[0][1]
+                });
+            }
+            else if(yuseongInfo[dongName] === 1) {
+                res.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1]
+                });
+            }
+            else if(yuseongInfo[dongName] === 2) {
+                res.setOptions({
+                    strokeColor: colorCode[2][0],
+                    fillColor: colorCode[2][1]
+                });
+            }
         }
         else if(dongOfJung.includes(dongName)) {
             for(var j = 0; j < DongOfDaejeon.features[i].geometry.coordinates[0].length; j++) {
