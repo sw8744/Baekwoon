@@ -7,18 +7,28 @@ import Seo from "./geojson/Seo";
 import Yuseong from "./geojson/Yuseong";
 import Daejeon from "./geojson/Daejeon";
 import DongFinder from "./dong";
+import safe from "../../assets/pin/safe.png";
+import warning from "../../assets/pin/warning.png";
+import danger from "../../assets/pin/danger.png";
 import { useNavigate } from "react-router-dom";
 
 const { kakao } = window;
 
-function Map() {
+function Livedata() {
     const navigate = useNavigate();
     const [guState, setGuState] = useState({"대덕구": 0, "유성구": 0, "동구": 0, "중구": 0, "서구": 0});
+    const pinImg = [new kakao.maps.MarkerImage(safe, new kakao.maps.Size(30, 62), {offset: new kakao.maps.Point(15, 62)}), new kakao.maps.MarkerImage(warning, new kakao.maps.Size(60, 75), {offset: new kakao.maps.Point(30, 75)}), new kakao.maps.MarkerImage(danger, new kakao.maps.Size(40, 70), {offset: new kakao.maps.Point(20, 70)})];
 
     const colorCode = [['#39DE2A', '#A2FF99'], ['#FFC107', '#FFE400'], ['#DC3545', '#FF4848']]
 
     const fetchGuInfo = async () => {
         const response = await fetch('http://127.0.0.1:5000/api/getGuInfo');
+        const data = await response.json();
+        return data;
+    };
+
+    const fetchBlockInfo = async () => { 
+        const response = await fetch('http://127.0.0.1:5000/api/getBlockInfo');
         const data = await response.json();
         return data;
     };
@@ -166,6 +176,7 @@ function Map() {
             polygonSeo.setMap(null);
             polygonDong.setMap(null);
             var yuseongInfo = await DongFinder(kakao, "유성구");
+            var blockInfo = await fetchBlockInfo();
             yuseongInfo.forEach(element => {
                 element.setMap(map);
                 kakao.maps.event.addListener(element, 'click', async function(mouseEvent) {  
@@ -215,6 +226,29 @@ function Map() {
 
                     polygonBlock1.setMap(map);
                     polygonBlock2.setMap(map);
+
+                    var markerPosition = [
+                        {
+                            latlng: new kakao.maps.LatLng(36.35100203157771, 127.29940096624644)
+                        },
+                        {
+                            latlng: new kakao.maps.LatLng(36.35198889750537, 127.30026814240678)
+                        },
+                        {
+                            latlng: new kakao.maps.LatLng(36.350531352427645, 127.29932675141482)
+                        },
+                        {
+                            latlng: new kakao.maps.LatLng(36.35156153168215, 127.30178161602238)
+                        }
+                    ];
+
+                    for(var i = 0; i < markerPosition.length; i++) {
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: markerPosition[i].latlng,
+                            image: pinImg[1]
+                        });
+                    }
                 });
             });
         });
@@ -388,4 +422,4 @@ function Map() {
     )
 }
 
-export default Map;
+export default Livedata;

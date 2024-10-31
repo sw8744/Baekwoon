@@ -42,6 +42,16 @@ def getDongInfo(dong):
         res[r[0]] = r[1]
     return res
 
+@app.get('/api/getBlockInfo')
+def getBlockInfo():
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM info.block")
+    result = cur.fetchall()
+    res = {}
+    for r in result:
+        res[r[0]] = r[1]
+    return res
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=5000)

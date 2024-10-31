@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Map from './pages/map/map';
+import Livedata from './pages/liveData/liveData';
 import Main from './pages/main/main';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Router>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/map" element={<Map />} />
+        <Route path="/map" element={<Livedata />} />
       </Routes>
     </Router>
     </div>
