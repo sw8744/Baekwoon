@@ -46,7 +46,7 @@ def getSerialInfo():
         res[6] = int(res[6]) # 유량 단계 (1-5)
         print(res)
         cur = connection.cursor()
-        cur.execute("UPDATE info.sensor SET flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s", (res[2], res[3], res[4], res[5], res[6]))
+        cur.execute("UPDATE info.sensor SET flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s WHERE id = 1", (res[2], res[3], res[4], res[5], res[6]))
         connection.commit()
         cur.close()
 
