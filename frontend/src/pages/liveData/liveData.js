@@ -177,6 +177,7 @@ function Livedata() {
             polygonDong.setMap(null);
             var yuseongInfo = await DongFinder(kakao, "유성구");
             var blockInfo = await fetchBlockInfo();
+            console.log(blockInfo);
             yuseongInfo.forEach(element => {
                 element.setMap(map);
                 kakao.maps.event.addListener(element, 'click', async function(mouseEvent) {  
@@ -246,7 +247,7 @@ function Livedata() {
                         var marker = new kakao.maps.Marker({
                             map: map,
                             position: markerPosition[i].latlng,
-                            image: pinImg[1]
+                            image: pinImg[blockInfo[i + 1]]
                         });
                     }
                 });

@@ -4,9 +4,16 @@ from fastapi.middleware.cors import CORSMiddleware
 import serial
 import threading
 
+
 app = FastAPI()
-ser = input("COM port?")
-ser_conn = serial.Serial(ser, 9600)
+ser = input("COM port? ")
+ser_conn = ""
+
+if ser == '':
+    ser_conn = ""
+
+else:
+    ser_conn = serial.Serial(ser, 9600)
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,7 +44,7 @@ def getSerialInfo():
         res[5] = int(res[5]) # 2번 스위치
         res[6] = int(res[6]) # 유량 단계 (1-5)
         cur = connection.cursor()
-        cur.execute("INSERT INTO info.sensor (flowrate, flux, switch1, switch2, status) VALUES (%s, %s, %s, %s, %s)", (res[2], res[3], res[4], res[5], res[6]))
+        cur.execute("UPDATE info.sensor flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s", (res[2], res[3], res[4], res[5], res[6]))
         connection.commit()
         cur.close()
 
