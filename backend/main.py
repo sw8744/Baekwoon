@@ -36,15 +36,17 @@ def getSerialInfo():
     while True:
         res = ser_conn.readline()
         res = res.split()
+        print(res)
         res[0] = float(res[0]) # 위도
         res[1] = float(res[1]) # 경도
         res[2] = float(res[2]) # 유량
         res[3] = float(res[3]) # 유속
-        res[4] = int(res[4]) # 1번 스위치
-        res[5] = int(res[5]) # 2번 스위치
+        res[4] = int(res[4]) + 1 # 1번 스위치
+        res[5] = int(res[5]) + 1 # 2번 스위치
         res[6] = int(res[6]) # 유량 단계 (1-5)
+        print(res)
         cur = connection.cursor()
-        cur.execute("UPDATE info.sensor flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s", (res[2], res[3], res[4], res[5], res[6]))
+        cur.execute("UPDATE info.sensor SET flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s", (res[2], res[3], res[4], res[5], res[6]))
         connection.commit()
         cur.close()
 
