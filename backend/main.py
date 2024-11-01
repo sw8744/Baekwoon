@@ -44,7 +44,7 @@ def getSerialInfo():
         res[5] = int(res[5]) # 2번 스위치
         res[6] = int(res[6]) # 유량 단계 (1-5)
         cur = connection.cursor()
-        cur.execute("UPDATE info.sensor flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s", (res[2], res[3], res[4], res[5], res[6]))
+        cur.execute("UPDATE info.sensor flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s WHERE id = 1", (res[2], res[3], res[4], res[5], res[6]))
         connection.commit()
         cur.close()
 
@@ -78,6 +78,25 @@ def getBlockInfo():
     res = {}
     for r in result:
         res[r[0]] = r[1]
+    cur.close()
+    return res
+
+@app.get('/api/getSensorInfo')
+def getSensorInfo():
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM info.sensor")
+    result = cur.fetchall()
+    res = []
+    print(result)
+    for r in result:
+        temp = {}
+        temp['id'] = r[5]
+        temp['flowrate'] = r[0]
+        temp['flux'] = r[1]
+        temp['switch1'] = r[2]
+        temp['switch2'] = r[3]
+        temp['status'] = r[4]
+        res.append(temp)
     cur.close()
     return res
 
