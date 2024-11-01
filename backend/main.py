@@ -83,6 +83,24 @@ def getBlockInfo():
     cur.close()
     return res
 
+@app.get('/api/getSensorInfo')
+def getSensorInfo():
+    cur = connection.cursor()
+    cur.execute("SELECT * FROM info.sensor")
+    result = cur.fetchall()
+    res = {}
+    print(result)
+    for r in result:
+        temp = {}
+        temp['flowrate'] = r[0]
+        temp['flux'] = r[1]
+        temp['switch1'] = r[2]
+        temp['switch2'] = r[3]
+        temp['status'] = r[4]
+        res[r[5]] = temp
+    cur.close()
+    return res
+
 thread1 = threading.Thread(target=getSerialInfo)
 
 if __name__ == "__main__":
