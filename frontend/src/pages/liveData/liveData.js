@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import './map.css';
+import './liveData.css';
 import Daedeok from "./geojson/Daedeok";
 import Dong from "./geojson/Dong";
 import Jung from "./geojson/Jung";
@@ -13,6 +13,7 @@ import danger from "../../assets/pin/danger.png";
 import { useNavigate } from "react-router-dom";
 
 const { kakao } = window;
+var pins = [];
 
 function Livedata() {
     const navigate = useNavigate();
@@ -33,12 +34,24 @@ function Livedata() {
         return data;
     };
 
-    const fetchPinInfo = async (marker) => {
-        const response = await fetch('http://127.0.0.1:5000/api/getPinInfo');
+    const fetchPinInfo = async (marker, index) => {
+        const response = await fetch('http://127.0.0.1:5000/api/getSensorInfo');
+        const data = await response.json();
+        index = String(index);
+        if(data[index]["switch1"] === 2 || data[index]["switch2"] === 2) {
+            marker.setImage(pinImg[2]);
+        }
+        else {
+            marker.setImage(pinImg[1]);
+        }
     };
 
     const goMain = () => {
         navigate('/');
+    };
+
+    const goFlowRate = () => {
+        navigate('/flowrate');
     };
 
     useEffect(() => {
@@ -212,20 +225,20 @@ function Livedata() {
                     var polygonBlock1 = new kakao.maps.Polygon({
                         path: polygonPathBlock1,
                         strokeWeight: 3,
-                        strokeColor: colorCode[0][0],
+                        strokeColor: colorCode[1][0],
                         strokeOpacity: 0.5,
                         strokeStyle: 'solid',
-                        fillColor: colorCode[0][1],
+                        fillColor: colorCode[1][1],
                         fillOpacity: 0.7
                     });
 
                     var polygonBlock2 = new kakao.maps.Polygon({
                         path: polygonPathBlock2,
                         strokeWeight: 3,
-                        strokeColor: colorCode[0][0],
+                        strokeColor: colorCode[2][0],
                         strokeOpacity: 0.5,
                         strokeStyle: 'solid',
-                        fillColor: colorCode[0][1],
+                        fillColor: colorCode[2][1],
                         fillOpacity: 0.7
                     });
 
@@ -248,11 +261,12 @@ function Livedata() {
                     ];
 
                     for(var i = 0; i < markerPosition.length; i++) {
-                        var marker = new kakao.maps.Marker({
+                        var pin = new kakao.maps.Marker({
                             map: map,
                             position: markerPosition[i].latlng,
-                            image: pinImg[blockInfo[i + 1]]
+                            image: pinImg[2]
                         });
+                        pins.push(pin);
                     }
                 });
             });
@@ -414,12 +428,18 @@ function Livedata() {
         });
     }, []);
 
+    // setInterval(async () => {
+    //     for(var i = 0; i < pins.length; i++) {
+    //         await fetchPinInfo(pins[i], i + 1);
+    //     }
+    // }, 1000);
+
     return (
         <div id="mapRoot">
             <div id="map">
                 <div id="mapButtonDiv">
                     <button id="mapButton" className="mapButtonClicked" onClick={() => {goMain()}}>실시간 배수로 데이터</button>
-                    <button id="mapButton" className="mapButton">배수 유속관리 시스템</button>
+                    <button id="mapButton" className="mapButton" onClick={() => {goFlowRate()}}>배수 유속관리 시스템</button>
                     <button id="mapButton" className="mapButton">도시 정비계획 데이터</button>
                 </div>
             </div>

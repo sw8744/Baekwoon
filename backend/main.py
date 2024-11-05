@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import serial
 import threading
 
-
 app = FastAPI()
 ser = input("COM port? ")
 ser_conn = ""
