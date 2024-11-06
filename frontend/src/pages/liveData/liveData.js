@@ -11,6 +11,7 @@ import safe from "../../assets/pin/safe.png";
 import warning from "../../assets/pin/warning.png";
 import danger from "../../assets/pin/danger.png";
 import { useNavigate } from "react-router-dom";
+import refresh from "../../assets/refresh.svg";
 
 const { kakao } = window;
 var pins = [];
@@ -52,6 +53,10 @@ function Livedata() {
 
     const goFlowRate = () => {
         navigate('/flowrate');
+    };
+
+    const goFixData = () => {
+        navigate('/fixdata');
     };
 
     useEffect(() => {
@@ -218,8 +223,7 @@ function Livedata() {
                         new kakao.maps.LatLng(36.35070846764009, 127.3011213541031),
                         new kakao.maps.LatLng(36.35123124926858, 127.30140030384065),
                         new kakao.maps.LatLng(36.35166761802249, 127.30204939842226),
-                        new kakao.maps.LatLng(36.35159849046213, 127.30031669139863),
-                        new kakao.maps.LatLng(36.35094177557745, 127.30033814907075)
+                        new kakao.maps.LatLng(36.35159849046213, 127.3001669139863),
                     ];
                     
                     var polygonBlock1 = new kakao.maps.Polygon({
@@ -428,19 +432,14 @@ function Livedata() {
         });
     }, []);
 
-    // setInterval(async () => {
-    //     for(var i = 0; i < pins.length; i++) {
-    //         await fetchPinInfo(pins[i], i + 1);
-    //     }
-    // }, 1000);
-
     return (
         <div id="mapRoot">
             <div id="map">
                 <div id="mapButtonDiv">
                     <button id="mapButton" className="mapButtonClicked" onClick={() => {goMain()}}>실시간 배수로 데이터</button>
                     <button id="mapButton" className="mapButton" onClick={() => {goFlowRate()}}>배수 유속관리 시스템</button>
-                    <button id="mapButton" className="mapButton">도시 정비계획 데이터</button>
+                    <button id="mapButton" className="mapButton" onClick={() => {goFixData()}}>도시 정비계획 데이터</button>
+                    <button id="mapButton" className="mapButton" onClick={() => {for(var i = 0; i < pins.length; i++) {fetchPinInfo(pins[i], i + 1);}}}><img src={refresh} id="refreshBtnImg" /></button>
                 </div>
             </div>
         </div>

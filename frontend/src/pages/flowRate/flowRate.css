@@ -4,9 +4,17 @@
     font-weight: bold;
 }
 
-.customOverlayTurned {
+.customOverlayLow {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 20px;
     font-weight: bold;
-    transform: rotate(270deg);
+    color: red;
+}
+
+#refreshBtnImg {
+    width: 30px;
+    height: 30px;
+    margin-bottom: -3px;
+    fill: #000066;
+    fill-rule:nonzero;
 }

@@ -10,6 +10,10 @@ function Main() {
     const goFlowRate = () => {
         navigate('/flowrate');
     };
+
+    const goFixData = () => {
+        navigate('/fixdata');
+    };
     
     return (
       <div id="mainRoot">
@@ -19,7 +23,7 @@ function Main() {
         <div id='mainButtonDiv'>
             <button id='liveDataButton' className='mainButton' onClick={() => {goLiveData()}}>실시간 배수로 데이터</button>
             <button id='floadButton' className='mainButton' onClick={() => {goFlowRate()}}>배수 유속관리 시스템</button>
-            <button id='fixDataButton' className='mainButton'>도시 정비계획 데이터</button>
+            <button id='fixDataButton' className='mainButton' onClick={() => {goFixData()}}>도시 정비계획 데이터</button>
         </div>
       </div>
     );

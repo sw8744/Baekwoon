@@ -26,6 +26,7 @@
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
+    border-color: #000066;
 }
 
 .mapButtonClicked {
@@ -39,4 +40,5 @@
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
+    border-color: #000066;
 }
