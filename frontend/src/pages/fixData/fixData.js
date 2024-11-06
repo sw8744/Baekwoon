@@ -66,89 +66,92 @@ function Fixdata() {
             level: 2
         };
         var map = new kakao.maps.Map(container, options);
-        Graph(maxValue[0], 10).then((overlayContent) => {
-            var customOverlay1 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.35093930118267, 127.30023814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+        if(overlay.length <= 6) {
+            overlay = [];
+            Graph(maxValue[0], 10).then((overlayContent) => {
+                var customOverlay1 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.35093930118267, 127.30023814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay1);
+                customOverlay1.setMap(map);
             });
-            overlay.push(customOverlay1);
-            customOverlay1.setMap(map);
-        });
-        
-        Graph(maxValue[1], 10).then((overlayContent) => {
-            var customOverlay2 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.35093930118267, 127.29906814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+            
+            Graph(maxValue[1], 10).then((overlayContent) => {
+                var customOverlay2 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.35093930118267, 127.29906814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay2);
+                customOverlay2.setMap(map);
             });
-            overlay.push(customOverlay2);
-            customOverlay2.setMap(map);
-        });
-
-        Graph(maxValue[2], 10).then((overlayContent) => {
-            var customOverlay3 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.34973930118267, 127.30006814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+    
+            Graph(maxValue[2], 10).then((overlayContent) => {
+                var customOverlay3 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.34973930118267, 127.30006814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay3);
+                customOverlay3.setMap(map);
             });
-            overlay.push(customOverlay3);
-            customOverlay3.setMap(map);
-        });
-
-        Graph(maxValue[3], 10).then((overlayContent) => {
-            var customOverlay4 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.35047930118267, 127.30093814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+    
+            Graph(maxValue[3], 10).then((overlayContent) => {
+                var customOverlay4 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.35047930118267, 127.30093814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay4);
+                customOverlay4.setMap(map);
             });
-            overlay.push(customOverlay4);
-            customOverlay4.setMap(map);
-        });
-
-        Graph(maxValue[4], 10).then((overlayContent) => {
-            var customOverlay5 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.3516430118267, 127.30189814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+    
+            Graph(maxValue[4], 10).then((overlayContent) => {
+                var customOverlay5 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.3516430118267, 127.30189814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay5);
+                customOverlay5.setMap(map);
             });
-            overlay.push(customOverlay5);
-            customOverlay5.setMap(map);
-        });
-
-        Graph(maxValue[5], 10).then((overlayContent) => {
-            var customOverlay6 = new kakao.maps.CustomOverlay({
-                map: map,
-                clickable: true,
-                content: '<div class="">' + overlayContent + '</div>',
-                position: new kakao.maps.LatLng(36.3523430118267, 127.30025814907075),
-                xAnchor: 0.5,
-                yAnchor: 1,
-                zIndex: 2
+    
+            Graph(maxValue[5], 10).then((overlayContent) => {
+                var customOverlay6 = new kakao.maps.CustomOverlay({
+                    map: map,
+                    clickable: true,
+                    content: '<div class="">' + overlayContent + '</div>',
+                    position: new kakao.maps.LatLng(36.3523430118267, 127.30025814907075),
+                    xAnchor: 0.5,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+                overlay.push(customOverlay6);
+                customOverlay6.setMap(map);
             });
-            overlay.push(customOverlay6);
-            customOverlay6.setMap(map);
-        });
+        }
     }, []);
 
     return (
