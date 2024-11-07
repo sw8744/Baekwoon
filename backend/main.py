@@ -23,10 +23,10 @@ app.add_middleware(
 )
 
 connection = psycopg2.connect(
-    host="thislifewon.kro.kr",
+    host="ishs29.kro.kr",
     database="baekwoon",
     port=5432,
-    user="jrh",
+    user="baekwoon",
     password="ishs12345!"
     )
 print("DB_Connected")
@@ -38,7 +38,6 @@ def getSerialInfo():
             try:
                 res = ser_conn.readline()
                 res = res.split()
-                print(res)
                 if(len(res) == 7):
                     break
             except IndexError:
@@ -50,7 +49,7 @@ def getSerialInfo():
         res[4] = int(res[4]) + 1 # 1번 스위치
         res[5] = int(res[5]) + 1 # 2번 스위치
         res[6] = int(res[6]) # 유량 단계 (1-5)
-        print(res)
+        # print(res)
         cur = connection.cursor()
         cur.execute("UPDATE info.sensor SET flowrate = %s, flux = %s, switch1 = %s, switch2 = %s, status = %s WHERE id = 1", (res[2], res[3], res[4], res[5], res[6]))
         connection.commit()
@@ -95,7 +94,7 @@ def getSensorInfo():
     cur.execute("SELECT * FROM info.sensor")
     result = cur.fetchall()
     res = {}
-    print(result)
+    # print(result)
     for r in result:
         temp = {}
         temp['flowrate'] = r[0]
@@ -105,7 +104,7 @@ def getSensorInfo():
         temp['state'] = r[4]
         res[r[5]] = temp
     cur.close()
-    print(res)
+    # print(res)
     return res
 
 thread1 = threading.Thread(target=getSerialInfo)
