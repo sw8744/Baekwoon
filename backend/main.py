@@ -33,9 +33,16 @@ print("DB_Connected")
 
 def getSerialInfo():
     while True:
-        res = ser_conn.readline()
-        res = res.split()
-        print(res)
+        res = ''
+        while True:
+            try:
+                res = ser_conn.readline()
+                res = res.split()
+                print(res)
+                if(len(res) == 7):
+                    break
+            except IndexError:
+                continue
         res[0] = float(res[0]) # 위도
         res[1] = float(res[1]) # 경도
         res[2] = float(res[2]) # 유량
