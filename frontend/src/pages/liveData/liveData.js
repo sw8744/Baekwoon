@@ -217,13 +217,14 @@ function Livedata() {
                     ];
 
                     var polygonPathBlock2 = [
+                        new kakao.maps.LatLng(36.35093745506643, 127.30033814907075),
                         new kakao.maps.LatLng(36.350920173020015, 127.29911506175996),
                         new kakao.maps.LatLng(36.350747352344854, 127.29916334152223),
                         new kakao.maps.LatLng(36.349775228899006, 127.30008602142335),
                         new kakao.maps.LatLng(36.35070846764009, 127.3011213541031),
                         new kakao.maps.LatLng(36.35123124926858, 127.30140030384065),
                         new kakao.maps.LatLng(36.35166761802249, 127.30204939842226),
-                        new kakao.maps.LatLng(36.35159849046213, 127.3001669139863),
+                        new kakao.maps.LatLng(36.35159849046213, 127.3003669139863),
                     ];
                     
                     var polygonBlock1 = new kakao.maps.Polygon({
