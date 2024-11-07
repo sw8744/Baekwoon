@@ -23,8 +23,13 @@ function Flowrate() {
         const response = await fetch('http://127.0.0.1:5000/api/getSensorInfo');
         const data = await response.json();
         const dataOverlay = await data["1"].state;
-        var classNameOverlay = await data > 2 ? 'customOverlay' : 'customOverlayLow';
-        console.log(dataOverlay);
+        var classNameOverlay = 'customOverlay';
+        if(dataOverlay <= 2) {
+            classNameOverlay = 'customOverlayLow';
+        }
+        else {
+            classNameOverlay = 'customOverlay';
+        }
         await overlay.setContent('<div class="' + classNameOverlay + '">' + dataOverlay + '</div>');
     };
 

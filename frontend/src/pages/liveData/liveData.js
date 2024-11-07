@@ -15,10 +15,12 @@ import refresh from "../../assets/refresh.svg";
 
 const { kakao } = window;
 var pins = [];
+var messages = ["", "반지하 주택 많음", "지하차도가 있음", "상습 침수 지하주차장 有"];
 
 function Livedata() {
     const navigate = useNavigate();
     const [guState, setGuState] = useState({"대덕구": 0, "유성구": 0, "동구": 0, "중구": 0, "서구": 0});
+    const [clickedButton, setClickedButton] = useState(-1);
     const pinImg = [new kakao.maps.MarkerImage(safe, new kakao.maps.Size(30, 62), {offset: new kakao.maps.Point(15, 62)}), new kakao.maps.MarkerImage(warning, new kakao.maps.Size(60, 75), {offset: new kakao.maps.Point(30, 75)}), new kakao.maps.MarkerImage(danger, new kakao.maps.Size(40, 70), {offset: new kakao.maps.Point(20, 70)})];
 
     const colorCode = [['#39DE2A', '#A2FF99'], ['#FFC107', '#FFE400'], ['#DC3545', '#FF4848']]
@@ -39,12 +41,20 @@ function Livedata() {
         const response = await fetch('http://127.0.0.1:5000/api/getSensorInfo');
         const data = await response.json();
         index = String(index);
-        if(data[index]["switch1"] === 2 || data[index]["switch2"] === 2) {
+        if(data[index]["switch1"] === 1 && data[index]["switch2"] === 1) {
+            marker.setImage(pinImg[0]);
+        }
+        else if(data[index]["switch1"] === 2 && data[index]["switch2"] === 2) {
             marker.setImage(pinImg[2]);
         }
         else {
             marker.setImage(pinImg[1]);
         }
+    };
+
+    const inputMessage = async (index) => {
+        var message = prompt("메시지를 입력하세요.");
+        messages[index] = message;
     };
 
     const goMain = () => {
@@ -258,20 +268,29 @@ function Livedata() {
                             latlng: new kakao.maps.LatLng(36.35198889750537, 127.30026814240678)
                         },
                         {
-                            latlng: new kakao.maps.LatLng(36.350531352427645, 127.29932675141482)
+                            latlng: new kakao.maps.LatLng(36.34980999999999, 127.30007000000000)
                         },
                         {
                             latlng: new kakao.maps.LatLng(36.35156153168215, 127.30178161602238)
                         }
                     ];
 
-                    for(var i = 0; i < markerPosition.length; i++) {
-                        var pin = new kakao.maps.Marker({
+                    for(let i = 0; i < markerPosition.length; i++) {
+                        let pin = new kakao.maps.Marker({
                             map: map,
                             position: markerPosition[i].latlng,
-                            image: pinImg[2]
+                            image: pinImg[2],
+                            clickable: true
                         });
                         pins.push(pin);
+                        kakao.maps.event.addListener(pin, 'click', function() {
+                            if(clickedButton != i) {
+                                setClickedButton(i);
+                            }
+                            else {
+                                setClickedButton(-1);
+                            }
+                        });
                     }
                 });
             });
@@ -335,7 +354,6 @@ function Livedata() {
 
         fetchGuInfo().then(data => {
             setGuState(data);
-            console.log(guState);
             if(data["대덕구"] === 0) {
                 polygonDaedeok.setOptions({
                     strokeColor: colorCode[0][0],
@@ -442,6 +460,18 @@ function Livedata() {
                     <button id="mapButton" className="mapButton" onClick={() => {goFixData()}}>도시 정비계획 데이터</button>
                     <button id="mapButton" className="mapButton" onClick={() => {for(var i = 0; i < pins.length; i++) {fetchPinInfo(pins[i], i + 1);}}}><img src={refresh} id="refreshBtnImg" /></button>
                 </div>
+                {
+                    clickedButton != -1
+                    ? <div id="infoDiv">
+                    <div id="infoTitle">PIN #{clickedButton}</div>
+                    <div id="infoContent">{messages[1]}</div>
+                    <div id="infoButtonDiv">
+                        <button id="infoButton" className="infoButton">입력</button>
+                        <button id="infoButton" className="infoButton">수정</button>
+                    </div>
+                </div>
+                : null
+                }
             </div>
         </div>
     )
