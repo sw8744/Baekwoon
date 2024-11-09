@@ -25,6 +25,7 @@ var overlay;
 var manhole;
 var pins = [];
 var manholes = [];
+var block;
 var flowValue = [1, 2, 1, 1, 2, 2, 3, 3, 4, 5, 4, 3, 5, 4, 3, 3, 5, 4, 4, 5, 3, 3, 4, 5, 3, 2, 1, 2, 2, 1];
 const overlayCoords = [
     // Block 1
@@ -65,6 +66,7 @@ const overlayCoords = [
 function Livedata() {
     const navigate = useNavigate();
     const [guState, setGuState] = useState({"대덕구": 0, "유성구": 0, "동구": 0, "중구": 0, "서구": 0});
+    const [isPinClicked, setIsPinClicked] = useState(false);
     const [clickedButton, setClickedButton] = useState(null);
     const [isAbleToClick, setIsAbleToClick] = useState(false);
     const [messages, setMessages] = useState(["", "반지하 주택 많음", "지하차도가 있음", "상습 침수 지하주차장 有"]);
@@ -85,18 +87,30 @@ function Livedata() {
         return data;
     };
 
-    const fetchPinInfo = async (marker, index) => {
+    const fetchPinInfo = async (marker, index, polygon) => {
         const response = await fetch('http://127.0.0.1:5000/api/getSensorInfo');
         const data = await response.json();
         index = String(index);
         if(data[index]["switch1"] === 1 && data[index]["switch2"] === 1) {
             marker.setImage(pinImg[0]);
+            polygon.setOptions({
+                strokeColor: colorCode[1][0],
+                fillColor: colorCode[1][1],
+        });
         }
         else if(data[index]["switch1"] === 2 && data[index]["switch2"] === 2) {
             marker.setImage(pinImg[2]);
+            polygon.setOptions({
+                strokeColor: colorCode[2][0],
+                fillColor: colorCode[2][1],
+        });
         }
         else {
             marker.setImage(pinImg[1]);
+            polygon.setOptions({
+                    strokeColor: colorCode[1][0],
+                    fillColor: colorCode[1][1],
+            });
         }
     };
 
@@ -253,11 +267,13 @@ function Livedata() {
 
     const fetchManholeInfo = async (manhole) => {
         const response = await fetchFlowRate();
-        if(response <= 2) {
-            manhole.setImage(markerImg[0]);
-        }
-        else if(response <= 5) {
-            manhole.setImage(markerImg[1]);
+        if(isPinClicked) {
+            if(response <= 2) {
+                manhole.setImage(markerImg[0]);
+            }
+            else if(response <= 5) {
+                manhole.setImage(markerImg[1]);
+            }
         }
     };
 
@@ -276,6 +292,7 @@ function Livedata() {
     useEffect(() => {
         setClickedButton(null);
         setIsAbleToClick(false);
+        setIsPinClicked(false);
         var container = document.getElementById('map');
         var options = {
             center: new kakao.maps.LatLng(36.3513473654900, 127.30094246537497),
@@ -465,6 +482,7 @@ function Livedata() {
                     });
 
                     polygonBlock1.setMap(map);
+                    block = polygonBlock1;
                     polygonBlock2.setMap(map);
 
                     var markerPosition = [
@@ -491,6 +509,7 @@ function Livedata() {
                         });
                         pins.push(pin);
                         kakao.maps.event.addListener(pin, 'click', function() {
+                            setIsPinClicked(true);
                             if(clickedButton != i) {
                                 setClickedButton(i);
                                 return;
