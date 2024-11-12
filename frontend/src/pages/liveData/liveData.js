@@ -466,9 +466,7 @@ function Livedata() {
                         strokeWeight: 3,
                         strokeColor: colorCode[1][0],
                         strokeOpacity: 0.5,
-                        strokeStyle: 'solid',
-                        fillColor: colorCode[1][1],
-                        fillOpacity: 0.7
+                        strokeStyle: 'solid'
                     });
 
                     var polygonBlock2 = new kakao.maps.Polygon({
@@ -476,9 +474,7 @@ function Livedata() {
                         strokeWeight: 3,
                         strokeColor: colorCode[2][0],
                         strokeOpacity: 0.5,
-                        strokeStyle: 'solid',
-                        fillColor: colorCode[2][1],
-                        fillOpacity: 0.7
+                        strokeStyle: 'solid'
                     });
 
                     polygonBlock1.setMap(map);
