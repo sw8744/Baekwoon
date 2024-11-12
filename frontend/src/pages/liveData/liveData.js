@@ -105,7 +105,7 @@ function Livedata() {
                 fillColor: colorCode[2][1],
         });
         }
-        else {
+        else if(data[index]["switch1"] === 2 && data[index]["switch2"] === 2) {
             marker.setImage(pinImg[1]);
             polygon.setOptions({
                     strokeColor: colorCode[1][0],
