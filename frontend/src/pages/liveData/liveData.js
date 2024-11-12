@@ -687,7 +687,7 @@ function Livedata() {
                     <button id="mapButton" className="mapButtonClicked" onClick={() => {goMain()}}>실시간 배수로 데이터</button>
                     <button id="mapButton" className="mapButton" onClick={() => {goFlowRate()}}>배수 유속관리 시스템</button>
                     <button id="mapButton" className="mapButton" onClick={() => {goFixData()}}>도시 정비계획 데이터</button>
-                    <button id="mapButton" className="mapButton" onClick={() => {for(var i = 0; i < pins.length; i++) {fetchPinInfo(pins[i], i + 1);}; fetchManholeInfo();}}><img src={refresh} id="refreshBtnImg" /></button>
+                    <button id="mapButton" className="mapButton" onClick={() => {for(var i = 0; i < pins.length; i++) {fetchPinInfo(pins[i], i + 1, block);}; fetchManholeInfo();}}><img src={refresh} id="refreshBtnImg" /></button>
                 </div>
                 {
                     clickedButton != null
