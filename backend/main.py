@@ -23,10 +23,10 @@ app.add_middleware(
 )
 
 connection = psycopg2.connect(
-    host="ishs29.kro.kr",
+    host="34.171.32.235",
     database="baekwoon",
     port=5432,
-    user="baekwoon",
+    user="jrh",
     password="ishs12345!"
     )
 print("DB_Connected")
