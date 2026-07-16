@@ -22,14 +22,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-connection = psycopg2.connect(
+try:
+    connection = psycopg2.connect(
     host="34.171.32.235",
     database="baekwoon",
     port=5432,
     user="jrh",
     password="ishs12345!"
     )
-print("DB_Connected")
+    print("DB_Connected")
+except:
+    print("DB_not_connected")
+    pass
 
 def getSerialInfo():
     while True:
